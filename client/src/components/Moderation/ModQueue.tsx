@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -54,13 +55,7 @@ export default function ModQueue() {
   const handleResolve = async (id: number, action: 'approve' | 'remove') => {
     setResolvingId(id);
     try {
-      const res = await fetch(`/reports/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'applicaton/json' },
-        credentials: 'include',
-        body: JSON.stringify({ action }),
-      });
-      if (!res.ok) throw new Error('Failed to resolve report');
+      await axios.patch(`/reports/${id}`, { action }, { withCredentials: true });
       showToast(action === 'remove' ? 'Content removed' : 'Report approved', 'success');
       setReports((prev) => prev.filter((r) => r.id !== id));
     } catch {

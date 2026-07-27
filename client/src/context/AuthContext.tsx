@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {
   createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode,
 } from 'react';
@@ -24,9 +25,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const res = await fetch('/oauth2/check', { credentials: 'include' });
-        const data = res.ok ? await res.json() : { user: null };
-        setUser(data.user);
+        const res = await axios.get('/oauth2/check', { withCredentials: true });
+        setUser(res.data.user);
       } catch {
         setUser(null);
       } finally {
@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const logout = useCallback(async () => {
-    await fetch('/oauth2/logout', { method: 'POST', credentials: 'include' });
+    await axios.post('/oauth2/logout', {}, { withCredentials: true });
     setUser(null);
   }, []);
 

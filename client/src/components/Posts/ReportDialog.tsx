@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -37,15 +38,9 @@ export default function ReportDialog({
     setSubmitting(true);
     showToast('Report submitted - running automatic screening...', 'info');
     try {
-      const res = await fetch('/reports', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          targetType, targetId, reason, details,
-        }),
-      });
-      if (!res.ok) throw new Error('Report submission failed');
+      await axios.post('/reports', {
+        targetType, targetId, reason, details,
+      }, { withCredentials: true });
       showToast('Screening complete. A neighbor moderator will confirm within 24 hours.', 'info');
       setReason('');
       setDetails('');

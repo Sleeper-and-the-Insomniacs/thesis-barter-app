@@ -166,7 +166,7 @@ reports.patch('/:id', requireModerator, async (req, res) => {
 
     res.json(resolved);
   } catch (err) {
-    console.error(err);
+    console.error('PATCH /reports/:id failed:', err);
     res.sendStatus(500);
   }
 });
