@@ -13,6 +13,8 @@ import NavBar from './NavBar/NavBar';
 import Posts from './Posts/Posts';
 import Profile from './Profile/Profile';
 import ModQueue from './Moderation/ModQueue';
+import DMsList from './DMs/DMsList';
+import DMs from './DMs/DMs';
 import NotFound from './NotFound/NotFound';
 
 const routes: RouteDef[] = [
@@ -25,6 +27,8 @@ const routes: RouteDef[] = [
   },
   { path: '/profile', component: Profile, requiresAuth: true },
   { path: '/profile/:id', component: Profile },
+  { path: '/dms', component: DMsList, requiresAuth: true },
+  { path: '/dms/:id', component: DMs, requiresAuth: true },
 ];
 
 function App() {

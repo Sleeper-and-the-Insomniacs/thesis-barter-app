@@ -22,7 +22,7 @@ model User {
   products     Product[]
   services     Service[]
   initiatedDMs DM[]        @relation("initiatedDMs")
-  recievedDMs  DM[]        @relation("recievedDMs")
+  receivedDMs  DM[]        @relation("receivedDMs")
   sMessages    Message[]   @relation("sMessages")
   rMessages    Message[]   @relation("rMessages")
   rep          Rep[]
@@ -50,7 +50,7 @@ model DM {
   id      Int  @id @default(autoincrement())
   user1   User @relation("initiatedDMs", fields: [user1Id], references: [id])
   user1Id Int
-  user2   User @relation("recievedDMs", fields: [user2Id], references: [id])
+  user2   User @relation("receivedDMs", fields: [user2Id], references: [id])
   user2Id Int
 
   messages Message[]
@@ -62,8 +62,8 @@ model Message {
   dmId       Int
   sender     User @relation("sMessages", fields: [senderId], references: [id])
   senderId   Int
-  reciever   User @relation("rMessages", fields: [recieverId], references: [id])
-  recieverId Int
+  receiver   User @relation("rMessages", fields: [receiverId], references: [id])
+  receiverId Int
 
   text String
 

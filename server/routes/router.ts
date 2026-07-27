@@ -3,6 +3,7 @@ import health from './health';
 import user from './user';
 import posts from './posts.js';
 import reports from './reports';
+import dms from './dms';
 
 export default {
   auth,
@@ -10,4 +11,5 @@ export default {
   user,
   posts,
   reports,
+  dms,
 };

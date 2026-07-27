@@ -17,6 +17,7 @@ function NavBar() {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/profile', label: 'Profile' },
+    { to: '/dms', label: 'DMs' },
     ...(user?.role === 'MODERATOR' || user?.role === 'ADMIN' ? [{ to: '/moderation', label: 'Mod Queue' }] : []),
   ];
 
