@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function DMsList() {
@@ -20,14 +20,14 @@ function DMsList() {
 
   return (
     dmsList.length
-      ? 'dms go here' // dmsList.map((dmInstance) => <DMsListItem dm={dmInstance} key={dmInstance.id} />)
+      ? dmsList.map((dmInstance) => <DMsListItem dm={dmInstance} key={dmInstance.id} />)
       : 'No DMs open!'
   );
 }
 
-// function DMsListItem() { // would take a dm prop
-//   // console.log(dm);
-//   return <div>hi!</div>;
-// }
+function DMsListItem({ dm }) {
+  console.log(dm);
+  return <div>hi!</div>;
+}
 
 export default DMsList;
