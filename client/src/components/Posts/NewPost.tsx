@@ -19,16 +19,14 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Collapse from '@mui/material/Collapse';
 
-import type { Cat, CatType, Cond } from '../../../../server/db/generated/browser';
-
-type Category = Pick<Cat, 'id' | 'name' | 'type'>;
+import type { CatType, Cond } from '../../../../server/db/generated/browser';
 
 // type definitions
 export interface PostFormData {
   title: string;
   name: string;
   offerType: CatType;
-  catId: number;
+  category: string;
   description: string;
   condition?: Cond;
   isLocal: boolean;
@@ -41,14 +39,13 @@ interface CreatePostModalProps {
   open: boolean;
   onClose: () => void;
   onSubmit: (formData: PostFormData) => Promise<void>;
-  categories: Category[];
 }
 
 type FormState = {
   title: string;
   name: string;
   offerType: CatType;
-  catId: number | '';
+  category: string;
   description: string;
   condition: Cond;
   isLocal: boolean;
@@ -61,7 +58,7 @@ const initialForm: FormState = {
   title: '',
   name: '',
   offerType: 'PRODUCT',
-  catId: '',
+  category: '',
   description: '',
   condition: 'GOOD',
   isLocal: false,
@@ -74,7 +71,6 @@ export default function CreatePostModal({
   open,
   onClose,
   onSubmit,
-  categories,
 }: CreatePostModalProps) {
   const [formData, setFormData] = useState<FormState>(initialForm);
   const [submitting, setSubmitting] = useState(false);
@@ -87,7 +83,7 @@ export default function CreatePostModal({
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-      ...(field === 'offerType' ? { catId: '' } : {}),
+      ...(field === 'offerType' ? { category: '' } : {}),
     }));
   };
 
@@ -100,7 +96,7 @@ export default function CreatePostModal({
   };
 
   // check for valid data
-  const isInvalid = (!formData.title.trim() || !formData.name.trim() || !formData.catId || !formData.description.trim() || (formData.isLocal && !formData.zipCode.trim()));
+  const isInvalid = (!formData.title.trim() || !formData.name.trim() || !formData.category.trim() || !formData.description.trim() || (formData.isLocal && !formData.zipCode.trim()));
 
   // submit handler for the form
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -113,7 +109,7 @@ export default function CreatePostModal({
         title: formData.title.trim(),
         name: formData.name.trim(),
         offerType: formData.offerType,
-        catId: Number(formData.catId),
+        category: formData.category.trim(),
         description: formData.description.trim(),
         condition: formData.offerType === 'PRODUCT' ? formData.condition : undefined,
         isLocal: formData.isLocal,
@@ -168,23 +164,14 @@ export default function CreatePostModal({
               <FormControlLabel value="SERVICE" control={<Radio />} label="Service" />
             </RadioGroup>
 
-            {/* Category Dropdown */}
-            <FormControl fullWidth required>
-              <InputLabel>Category</InputLabel>
-              <Select
-                value={formData.catId}
-                label="Category"
-                onChange={(e) => handleChange('catId', Number(e.target.value))}
-              >
-                {categories
-                  .filter((c) => c.type === formData.offerType)
-                  .map((cat) => (
-                    <MenuItem key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
+            {/* Category */}
+            <TextField
+              label="Category"
+              fullWidth
+              required
+              value={formData.category}
+              onChange={(e) => handleChange('category', e.target.value)}
+            />
 
             {/* Description */}
             <TextField
