@@ -6,6 +6,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FlagIcon from '@mui/icons-material/Flag';
+import PersonOffIcon from '@mui/icons-material/PersonOff';
 
 interface PostActionsMenuProps {
   onReport: () => void;
@@ -52,10 +54,22 @@ export default function PostActionsMenu({
         </MenuItem>
         )}
         {showReport && (
-        <MenuItem onClick={() => { onReport(); handleClose(); }}>Report post</MenuItem>
+        <MenuItem onClick={() => { onReport(); handleClose(); }}>
+          <ListItemIcon>
+            <FlagIcon fontSize="small" />
+          </ListItemIcon>
+          Report post
+        </MenuItem>
         )}
         {showBlock && (
         <MenuItem onClick={() => { onBlock?.(); handleClose(); }}>
+          <ListItemIcon>
+            {blocked ? (
+              <PersonOffIcon fontSize="small" />
+            ) : (
+              <PersonOffIcon fontSize="small" />
+            )}
+          </ListItemIcon>
           {blocked ? 'Unblock user' : 'Block user'}
         </MenuItem>
         )}
