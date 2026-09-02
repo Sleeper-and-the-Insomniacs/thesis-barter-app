@@ -35,7 +35,7 @@ const createWatermark = (file: File, watermarkText?: string): Promise<Blob> => n
       return;
     }
 
-    const scaleFactor = Math.min(1000 / sourceImage.width, 1000 / sourceImage.height, 1);
+    const scaleFactor = Math.min(800 / sourceImage.width, 800 / sourceImage.height, 1);
     const scaledWidth = sourceImage.width * scaleFactor;
     const scaledHeight = sourceImage.height * scaleFactor;
 
