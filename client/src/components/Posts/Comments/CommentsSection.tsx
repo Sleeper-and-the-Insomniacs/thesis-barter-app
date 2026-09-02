@@ -12,7 +12,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
-import { useAuth } from '../../../context/AuthContext';
+import {
+  hasCompletedLocationSetup,
+  requestLocationSetup,
+  useAuth,
+} from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import { useRouter } from '../../../context/RouterContext';
 import UserAvatar from '../../common/UserAvatar';
@@ -65,6 +69,11 @@ export default function CommentsSection({
   const topLevelComments = childrenByParentId.get(null) ?? [];
 
   const handleAddComment = async () => {
+    if (!hasCompletedLocationSetup(user)) {
+      requestLocationSetup();
+      return;
+    }
+
     const text = commentDraft.trim();
     if (!text) return;
     setSubmittingComment(true);
@@ -101,6 +110,11 @@ export default function CommentsSection({
   // Shared by "click the quiet prompt" and "click Reply on a comment" - both need the
   // composer open and focused, just from different starting points.
   const openComposer = () => {
+    if (!hasCompletedLocationSetup(user)) {
+      requestLocationSetup();
+      return;
+    }
+
     setComposerOpened(true);
     requestAnimationFrame(() => {
       composerInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -109,6 +123,11 @@ export default function CommentsSection({
   };
 
   const startReply = (comment: CommentData) => {
+    if (!hasCompletedLocationSetup(user)) {
+      requestLocationSetup();
+      return;
+    }
+
     setReplyTarget(comment);
     openComposer();
   };

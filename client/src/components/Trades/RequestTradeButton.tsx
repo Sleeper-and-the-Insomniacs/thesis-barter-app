@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -9,6 +9,11 @@ import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTheme } from '@mui/material/styles';
 import { useToast } from '../../context/ToastContext';
+import {
+  hasCompletedLocationSetup,
+  requestLocationSetup,
+  useAuth,
+} from '../../context/AuthContext';
 
 export type TradeRequestStatusValue = 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'CANCELLED';
 
@@ -40,13 +45,31 @@ export default function RequestTradeButton({
   hideButton = false,
 }: RequestTradeButtonProps) {
   const theme = useTheme();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const { showToast } = useToast();
 
   const isPending = myRequest?.status === 'PENDING';
-  const dialogOpen = externalOpen ?? open;
+  const setupComplete = hasCompletedLocationSetup(user);
+  const dialogOpen = setupComplete && (externalOpen ?? open);
+
+  useEffect(() => {
+    if (externalOpen && !setupComplete) {
+      requestLocationSetup();
+      onClose?.();
+    }
+  }, [externalOpen, setupComplete, onClose]);
+
+  const handleOpen = () => {
+    if (!setupComplete) {
+      requestLocationSetup();
+      return;
+    }
+
+    setOpen(true);
+  };
 
   const handleClose = () => {
     if (submitting) return;
@@ -56,6 +79,11 @@ export default function RequestTradeButton({
   };
 
   const handleSubmit = async () => {
+    if (!hasCompletedLocationSetup(user)) {
+      requestLocationSetup();
+      return;
+    }
+
     setSubmitting(true);
     try {
       await axios.post('/trade-requests', { postId, message: message.trim() || undefined });
@@ -99,7 +127,7 @@ export default function RequestTradeButton({
   return (
     <>
       {!hideButton && (
-        <Button variant="contained" onClick={() => setOpen(true)} sx={{ borderRadius: theme.radius.md, textTransform: 'none' }}>
+        <Button variant="contained" onClick={handleOpen} sx={{ borderRadius: theme.radius.md, textTransform: 'none' }}>
           Request to Trade
         </Button>
       )}
