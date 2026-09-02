@@ -167,8 +167,7 @@ function DistanceValue({
 
 /* Types */
 export interface AdvancedSearchFilters {
-  title: string;
-  description: string;
+  searchText: string;
   listingType: string;
   condition: string;
   hasImages: boolean;
@@ -199,8 +198,7 @@ interface SearchPostsAdvancedProps {
 
 /* Default Filter Values */
 export const EMPTY_ADVANCED_SEARCH: AdvancedSearchFilters = {
-  title: '',
-  description: '',
+  searchText: '',
   listingType: '',
   condition: '',
   hasImages: false,
@@ -274,7 +272,7 @@ export default function SearchPostsAdvanced({
     if (!open) return undefined;
 
     const updateDialogScale = () => {
-      const baseHeight = 760
+      const baseHeight = 690
         + (draft.listingType === 'PRODUCT' ? 72 : 0)
         + ((draft.dateMode === 'before' || draft.dateMode === 'after') ? 72 : 0)
         + (draft.dateMode === 'between' ? 144 : 0)
@@ -300,7 +298,11 @@ export default function SearchPostsAdvanced({
 
   const handleApply = () => {
     if (dateMissing || dateRangeInvalid) return;
-    onApply(draft);
+
+    onApply({
+      ...draft,
+      distancePostalCode: draft.distanceRange ? draft.distancePostalCode : '',
+    });
   };
 
   const updateDistanceMenuHeight = () => {
@@ -338,20 +340,12 @@ export default function SearchPostsAdvanced({
         sx={{ px: 3, py: 2.5, overflow: 'hidden' }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-          {/* Search by Title */}
+          {/* Search by Title or Description */}
           <TextField
-            label="Search by Title"
+            label="Search by Title or Description"
             fullWidth
-            value={draft.title}
-            onChange={(event) => updateDraft({ title: event.target.value })}
-          />
-
-          {/* Search by Description */}
-          <TextField
-            label="Search by Description"
-            fullWidth
-            value={draft.description}
-            onChange={(event) => updateDraft({ description: event.target.value })}
+            value={draft.searchText}
+            onChange={(event) => updateDraft({ searchText: event.target.value })}
           />
 
           {/* Search by Category */}
