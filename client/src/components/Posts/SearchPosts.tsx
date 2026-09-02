@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface SearchPostsProps {
   search: string;
@@ -34,12 +35,48 @@ export default function SearchPosts({
           display: 'flex', alignItems: 'center', px: 1.5, py: 0.25, flex: 1,
         }}
       >
-        <InputBase
-          value={search}
-          onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Search for listings..."
-          sx={{ flex: 1, fontSize: '0.85rem' }}
-        />
+        <Box
+          sx={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            flex: 1,
+            minWidth: 0,
+          }}
+        >
+          <InputBase
+            value={search}
+            onChange={(event) => onSearchChange(event.target.value)}
+            placeholder="Search for listings..."
+            sx={{
+              flex: 1,
+              minWidth: 0,
+              fontSize: '0.85rem',
+              pr: search ? 4 : 0,
+            }}
+          />
+
+          {search.length > 0 && (
+            <IconButton
+              type="button"
+              size="small"
+              aria-label="Clear search"
+              onClick={() => onSearchChange('')}
+              sx={{
+                position: 'absolute',
+                right: 2,
+                p: 0.25,
+                color: 'text.secondary',
+              }}
+            >
+              <CloseIcon
+                sx={{
+                  fontSize: '1rem',
+                }}
+              />
+            </IconButton>
+          )}
+        </Box>
 
         <IconButton
           type="button"
