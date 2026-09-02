@@ -120,7 +120,25 @@ function NavBar({ scrollingDown }: NavBarProps) {
           }}
           >
 
-            <SettingsMenu />
+            <Box
+              sx={{
+                width: 36,
+                height: 36,
+                borderRadius: '50%',
+                bgcolor: 'primary.main',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                '& .MuiIconButton-root': {
+                  width: 36,
+                  height: 36,
+                  color: 'primary.contrastText',
+                },
+              }}
+            >
+              <SettingsMenu />
+            </Box>
 
             {loading ? (
               <Typography variant="caption" color="text.secondary">Loading…</Typography>
