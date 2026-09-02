@@ -104,19 +104,6 @@ export default function Footer({ scrollingDown }: FooterProps) {
             |
           </Box>
 
-          <Link to="/privacy">Privacy</Link>
-
-          <Box
-            component="span"
-            sx={{
-              color: 'link.main',
-              fontSize: { xs: '0.9rem', sm: '1.4rem' },
-              lineHeight: 1,
-            }}
-          >
-            |
-          </Box>
-
           <Link to="/contact">Contact</Link>
 
           <Box
