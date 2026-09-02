@@ -652,10 +652,13 @@ posts.get('/', async (req, res) => {
         const viewerCompletedOffer = (post.tradeOffers || []).find(
           (o: TradeOfferItem) => o.offererId === viewerId && o.status === 'COMPLETED',
         );
+        const viewerCompletedTrade = trades.find(
+          (trade) => trade.requesterId === viewerId && trade.status === 'COMPLETED',
+        );
 
         const postUrls = await getMediaUrls(
           post.postMedia,
-          isOwner || Boolean(viewerCompletedOffer),
+          isOwner || Boolean(viewerCompletedOffer) || Boolean(viewerCompletedTrade),
         );
 
         const { imageUrls, imageItems } = await getPostImageData(post.postMedia);

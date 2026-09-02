@@ -19,6 +19,19 @@ interface IncomingRequest {
   requester: { id: number; name: string | null; email: string };
 }
 
+interface IncomingArtOffer {
+  id: number;
+  message: string | null;
+  status: 'PENDING' | 'ACCEPTED' | 'COMPLETED' | 'REJECTED';
+  createdAt: string;
+  previewUrl: string | null;
+  offerer: { id: number; name: string | null; email: string };
+}
+
+interface ArtOffersForPostResponse {
+  offers: IncomingArtOffer[];
+}
+
 interface IncomingTradeRequestsProps {
   postId: number;
   onAccepted: () => void | Promise<void>;
@@ -31,15 +44,23 @@ export default function IncomingTradeRequests({ postId, onAccepted }: IncomingTr
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [requests, setRequests] = useState<IncomingRequest[]>([]);
+  const [artOffers, setArtOffers] = useState<IncomingArtOffer[]>([]);
   const [acceptingId, setAcceptingId] = useState<number | null>(null);
+  const [acceptingArtId, setAcceptingArtId] = useState<number | null>(null);
   const { showToast } = useToast();
   const { navigate } = useRouter();
 
   const loadRequests = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await axios.get<IncomingRequest[]>(`/trade-requests/for-post/${postId}`);
-      setRequests(res.data);
+      const [requestsRes, artOffersRes] = await Promise.all([
+        axios.get<IncomingRequest[]>(`/trade-requests/for-post/${postId}`),
+        axios.get<ArtOffersForPostResponse>(`/artTradeOffers?postId=${postId}`, {
+          withCredentials: true,
+        }),
+      ]);
+      setRequests(requestsRes.data);
+      setArtOffers(artOffersRes.data.offers);
     } catch {
       showToast('Could not load trade requests.', 'error');
     } finally {
@@ -77,7 +98,29 @@ export default function IncomingTradeRequests({ postId, onAccepted }: IncomingTr
     }
   };
 
+  const handleAcceptArtOffer = async (offerId: number) => {
+    setAcceptingArtId(offerId);
+    try {
+      await axios.patch(
+        `/artTradeOffers/${offerId}/accept`,
+        {},
+        { withCredentials: true },
+      );
+      showToast('Art trade accepted!', 'success');
+      setOpen(false);
+      await onAccepted();
+    } catch (err) {
+      const message = axios.isAxiosError(err) && err.response?.data?.error
+        ? err.response.data.error
+        : 'Could not accept this art trade offer.';
+      showToast(message, 'error');
+    } finally {
+      setAcceptingArtId(null);
+    }
+  };
+
   const pendingRequests = requests.filter((r) => r.status === 'PENDING');
+  const pendingArtOffers = artOffers.filter((offer) => offer.status === 'PENDING');
   const highlightTarget = highlightRequestId
     ? requests.find((r) => r.id === highlightRequestId)
     : undefined;
@@ -104,13 +147,13 @@ export default function IncomingTradeRequests({ postId, onAccepted }: IncomingTr
             <Alert severity="info">This trade request was withdrawn by the requester.</Alert>
           )}
 
-          {!loading && pendingRequests.length === 0 && (
+          {!loading && pendingRequests.length === 0 && pendingArtOffers.length === 0 && (
             <Typography variant="body2" color="text.secondary">No pending requests yet.</Typography>
           )}
 
           {!loading && pendingRequests.map((request) => (
             <Box
-              key={request.id}
+              key={`request-${request.id}`}
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -145,8 +188,68 @@ export default function IncomingTradeRequests({ postId, onAccepted }: IncomingTr
                   <Typography variant="body2" sx={{ color: 'text.primary', mt: 0.5 }}>{request.message}</Typography>
                 )}
               </Box>
-              <Button size="small" variant="contained" color="success" disabled={acceptingId !== null} onClick={() => handleAccept(request.id)}>
+              <Button size="small" variant="contained" color="success" disabled={acceptingId !== null || acceptingArtId !== null} onClick={() => handleAccept(request.id)}>
                 {acceptingId === request.id ? 'Accepting...' : 'Accept'}
+              </Button>
+            </Box>
+          ))}
+
+          {!loading && pendingArtOffers.map((offer) => (
+            <Box
+              key={`art-offer-${offer.id}`}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                p: 1.5,
+                bgcolor: 'surface.sunken',
+                borderRadius: theme.radius.md,
+                gap: 2,
+              }}
+            >
+              <Box sx={{ minWidth: 0, flex: 1 }}>
+                <Box
+                  onClick={() => navigate(`/profile/${offer.offerer.id}`)}
+                  role="button"
+                  tabIndex={0}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1.5,
+                    width: 'fit-content',
+                    cursor: 'pointer',
+                    '&:hover .offerer-name': { textDecoration: 'underline' },
+                  }}
+                >
+                  <UserAvatar user={offer.offerer} size={32} />
+                  <Typography variant="body2" className="offerer-name" sx={{ fontWeight: 600, color: 'text.primary' }}>
+                    {offer.offerer.name ?? offer.offerer.email}
+                  </Typography>
+                </Box>
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+                  Digital Art Offer
+                </Typography>
+                {offer.previewUrl && (
+                  <Box
+                    component="img"
+                    src={offer.previewUrl}
+                    alt="Offered Watermarked Art"
+                    sx={{
+                      display: 'block',
+                      maxWidth: 220,
+                      maxHeight: 140,
+                      objectFit: 'contain',
+                      mt: 1,
+                      borderRadius: theme.radius.md,
+                    }}
+                  />
+                )}
+                {offer.message && (
+                  <Typography variant="body2" sx={{ color: 'text.primary', mt: 0.5 }}>{offer.message}</Typography>
+                )}
+              </Box>
+              <Button size="small" variant="contained" color="success" disabled={acceptingId !== null || acceptingArtId !== null} onClick={() => handleAcceptArtOffer(offer.id)}>
+                {acceptingArtId === offer.id ? 'Accepting...' : 'Accept'}
               </Button>
             </Box>
           ))}
