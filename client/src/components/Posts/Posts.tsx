@@ -67,9 +67,7 @@ export default function Posts() {
       setError('');
       const response = await axios.get<PostData[]>('/posts', {
         params: {
-          q: searchValue,
-          title: filters.title || undefined,
-          description: filters.description || undefined,
+          q: isAdvancedSearch ? filters.searchText : searchValue,
           listingType: filters.listingType || undefined,
           condition: filters.condition || undefined,
           hasImages: filters.hasImages || undefined,

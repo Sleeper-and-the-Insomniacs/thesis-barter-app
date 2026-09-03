@@ -25,7 +25,6 @@ import DeletedConversations from './DMs/DeletedConversations';
 import LocationSetupModal from './Location/LocationSetupModal';
 import Footer from './Footer/Footer';
 import Terms from './Footer/Terms';
-import Privacy from './Footer/Privacy';
 import Contact from './Footer/Contact';
 import Help from './Footer/Help';
 
@@ -49,7 +48,6 @@ const routes: RouteDef[] = [
   { path: '/messages/:id', component: Messages, requiresAuth: true },
   { path: '/deleted-conversations', component: DeletedConversations, requiresAuth: true },
   { path: '/terms', component: Terms },
-  { path: '/privacy', component: Privacy },
   { path: '/contact', component: Contact },
   { path: '/help', component: Help },
 ];

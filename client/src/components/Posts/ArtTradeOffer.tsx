@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -13,7 +13,11 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useTheme } from '@mui/material/styles';
-import { useAuth } from '../../context/AuthContext';
+import {
+  hasCompletedLocationSetup,
+  requestLocationSetup,
+  useAuth,
+} from '../../context/AuthContext';
 
 interface ArtTradeOfferProps {
   postId: number;
@@ -35,7 +39,7 @@ const createWatermark = (file: File, watermarkText?: string): Promise<Blob> => n
       return;
     }
 
-    const scaleFactor = Math.min(1000 / sourceImage.width, 1000 / sourceImage.height, 1);
+    const scaleFactor = Math.min(800 / sourceImage.width, 800 / sourceImage.height, 1);
     const scaledWidth = sourceImage.width * scaleFactor;
     const scaledHeight = sourceImage.height * scaleFactor;
 
@@ -95,9 +99,24 @@ export const ArtTradeOffer: React.FC<ArtTradeOfferProps> = ({
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const modalOpen = externalOpen ?? open;
+  const setupComplete = hasCompletedLocationSetup(user);
+  const modalOpen = setupComplete && (externalOpen ?? open);
 
-  const handleOpen = () => setOpen(true);
+  useEffect(() => {
+    if (externalOpen && !setupComplete) {
+      requestLocationSetup();
+      onClose?.();
+    }
+  }, [externalOpen, setupComplete, onClose]);
+
+  const handleOpen = () => {
+    if (!setupComplete) {
+      requestLocationSetup();
+      return;
+    }
+
+    setOpen(true);
+  };
 
   const handleClose = () => {
     if (!isSubmitting) {
@@ -138,6 +157,11 @@ export const ArtTradeOffer: React.FC<ArtTradeOfferProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (!hasCompletedLocationSetup(user)) {
+      requestLocationSetup();
+      return;
+    }
 
     if (!file) {
       setError('Please attach an artwork file for trade.');

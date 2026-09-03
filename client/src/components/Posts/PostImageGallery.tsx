@@ -30,9 +30,15 @@ export default function PostImageGallery({
   const currentPostImage = postImages[currentImageIndex] ?? postImages[0];
   const feedDigitalImage = post.previewUrl ?? null;
 
-  const expandedImageUrl = isArtTrade
-    ? post.fullUrl ?? post.previewUrl
-    : currentPostImage;
+  let expandedImageUrl: string | null = currentPostImage ?? null;
+
+  if (isArtTrade) {
+    expandedImageUrl = post.previewUrl ?? null;
+
+    if (post.status === 'COMPLETED') {
+      expandedImageUrl = post.fullUrl ?? post.previewUrl ?? null;
+    }
+  }
 
   const handlePreviousImage = () => {
     setCurrentImageIndex((currentIndex) => (

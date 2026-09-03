@@ -22,7 +22,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Link, useRouter } from '../../context/RouterContext';
 import SettingsMenu from './SettingsMenu';
 import NotificationBell from './NotificationBell';
-import { useAuth, isModerator } from '../../context/AuthContext';
+import {
+  hasCompletedLocationSetup,
+  isModerator,
+  requestLocationSetup,
+  useAuth,
+} from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import NewPost, { type PostFormData } from '../Posts/NewPost';
 import UserAvatar from '../common/UserAvatar';
@@ -67,6 +72,15 @@ function NavBar({ scrollingDown }: NavBarProps) {
       showToast(message, 'error');
       throw requestError;
     }
+  };
+
+  const handleNewPostOpen = () => {
+    if (!hasCompletedLocationSetup(user)) {
+      requestLocationSetup();
+      return;
+    }
+
+    setModalOpen(true);
   };
 
   return (
@@ -120,7 +134,25 @@ function NavBar({ scrollingDown }: NavBarProps) {
           }}
           >
 
-            <SettingsMenu />
+            <Box
+              sx={{
+                width: 36,
+                height: 36,
+                borderRadius: '50%',
+                bgcolor: 'primary.main',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                '& .MuiIconButton-root': {
+                  width: 36,
+                  height: 36,
+                  color: 'primary.contrastText',
+                },
+              }}
+            >
+              <SettingsMenu />
+            </Box>
 
             {loading ? (
               <Typography variant="caption" color="text.secondary">Loading…</Typography>
@@ -285,7 +317,7 @@ function NavBar({ scrollingDown }: NavBarProps) {
           <Fab
             variant="extended"
             color="primary"
-            onClick={() => setModalOpen(true)}
+            onClick={handleNewPostOpen}
             sx={{
               textTransform: 'none',
               fontWeight: 600,

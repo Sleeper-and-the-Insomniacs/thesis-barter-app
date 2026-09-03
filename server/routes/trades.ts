@@ -198,6 +198,20 @@ trades.patch('/:id/complete', requireAuth, async (req, res) => {
       });
 
       if (ownerCompl && reqCompl) {
+        await tx.tradeOffer.updateMany({
+          where: {
+            postId: trade.postId,
+            offererId: trade.requesterId,
+            status: 'ACCEPTED',
+            isRemoved: false,
+          },
+          data: {
+            status: 'COMPLETED',
+            ownerApproved: true,
+            offererApproved: true,
+          },
+        });
+
         await tx.post.update({
           where: { id: trade.postId },
           data: { status: Status.COMPLETED },

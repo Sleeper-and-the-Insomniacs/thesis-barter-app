@@ -45,6 +45,7 @@ model User {
   country    String?
   lat        Float?
   lng        Float?
+  termsAccepted Boolean  @default(false)
 
   isSystem           Boolean @default(false)
   pendingBio         String?

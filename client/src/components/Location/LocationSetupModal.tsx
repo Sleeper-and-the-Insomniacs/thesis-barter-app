@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import Alert from '@mui/material/Alert';
@@ -12,14 +12,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 
-import { useAuth } from '../../context/AuthContext';
+import {
+  hasCompletedLocationSetup,
+  LOCATION_SETUP_REQUIRED_EVENT,
+  useAuth,
+} from '../../context/AuthContext';
 import Terms from '../Footer/Terms';
 import { COUNTRIES } from './Countries';
 
@@ -28,6 +34,7 @@ interface LocationResponse {
   country: string | null;
   lat: number | null;
   lng: number | null;
+  termsAccepted: boolean;
 }
 
 export default function LocationSetupModal() {
@@ -41,17 +48,50 @@ export default function LocationSetupModal() {
   const [error, setError] = useState('');
   const [termsOpen, setTermsOpen] = useState(false);
   const [rulesAccepted, setRulesAccepted] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const [actionPrompt, setActionPrompt] = useState(false);
 
   const needsLocation = Boolean(
     !loading
     && user
-    && (
-      !user.zipCode
-      || !user.country
-      || user.lat === null
-      || user.lng === null
-    ),
+    && !hasCompletedLocationSetup(user),
   );
+
+  useEffect(() => {
+    setDismissed(false);
+    setActionPrompt(false);
+  }, [user?.id]);
+
+  useEffect(() => {
+    setPostalCode(user?.zipCode ?? '');
+    setCountry(user?.country ?? '');
+    setRulesAccepted(Boolean(user?.termsAccepted));
+  }, [
+    user?.id,
+    user?.zipCode,
+    user?.country,
+    user?.termsAccepted,
+  ]);
+
+  useEffect(() => {
+    const handleLocationSetupRequired = () => {
+      setActionPrompt(true);
+      setDismissed(false);
+      setError('');
+    };
+
+    window.addEventListener(
+      LOCATION_SETUP_REQUIRED_EVENT,
+      handleLocationSetupRequired,
+    );
+
+    return () => {
+      window.removeEventListener(
+        LOCATION_SETUP_REQUIRED_EVENT,
+        handleLocationSetupRequired,
+      );
+    };
+  }, []);
 
   const saveLocation = (location: LocationResponse) => {
     updateUser({
@@ -59,7 +99,10 @@ export default function LocationSetupModal() {
       country: location.country,
       lat: location.lat,
       lng: location.lng,
+      termsAccepted: location.termsAccepted,
     });
+    setActionPrompt(false);
+    setDismissed(false);
   };
 
   const getRequestError = (requestError: unknown) => (
@@ -67,6 +110,14 @@ export default function LocationSetupModal() {
       ? requestError.response.data.error
       : 'Could not save your location - check your connection and try again.'
   );
+
+  const handleClose = () => {
+    if (saving) return;
+
+    setDismissed(true);
+    setActionPrompt(false);
+    setError('');
+  };
 
   const handleManualLocation = async () => {
     if (!postalCode.trim() || !country || !rulesAccepted) return;
@@ -80,6 +131,7 @@ export default function LocationSetupModal() {
         {
           postalCode: postalCode.trim(),
           country,
+          termsAccepted: rulesAccepted,
         },
         { withCredentials: true },
       );
@@ -111,6 +163,7 @@ export default function LocationSetupModal() {
             {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
+              termsAccepted: rulesAccepted,
             },
             { withCredentials: true },
           );
@@ -132,7 +185,7 @@ export default function LocationSetupModal() {
   return (
     <>
       <Dialog
-        open={needsLocation}
+        open={needsLocation && !dismissed}
         maxWidth="sm"
         fullWidth
         scroll="paper"
@@ -157,64 +210,156 @@ export default function LocationSetupModal() {
           sx={{
             p: { xs: 1.5, sm: 4 },
             overflowY: 'auto',
+            position: 'relative',
           }}
         >
-          <Typography
-            variant="h6"
+          <IconButton
+            aria-label="Close"
+            onClick={handleClose}
+            disabled={saving}
             sx={{
-              mb: { xs: 0.75, sm: 2 },
-              fontSize: { xs: '0.875rem', sm: '1.25rem' },
-              lineHeight: { xs: 1.35, sm: 1.5 },
+              position: 'absolute',
+              top: { xs: 4, sm: 8 },
+              right: { xs: 4, sm: 8 },
+              zIndex: 1,
             }}
           >
-            Welcome to Barta, the one stop shop for all your bartering needs.
-            Build community, trade smarter and barter better with Barta!
-          </Typography>
+            <CloseIcon />
+          </IconButton>
 
-          <Box
-            component="img"
-            src={new URL('../../assets/BartaMascotNoBackground.png', import.meta.url).href}
-            alt="Barta"
-            sx={{
-              display: 'block',
-              width: '100%',
-              maxWidth: { xs: 150, sm: 220 },
-              height: 'auto',
-              mx: 'auto',
-              my: { xs: 0.5, sm: 2 },
-              transform: 'scale(1.25)',
-            }}
-          />
+          {!actionPrompt && (
+            <>
+              <Typography
+                variant="h6"
+                sx={{
+                  mb: { xs: 0.75, sm: 2 },
+                  pr: 4,
+                  fontSize: { xs: '0.875rem', sm: '1.25rem' },
+                  lineHeight: { xs: 1.35, sm: 1.5 },
+                }}
+              >
+                Welcome to Barta, the one stop shop for all your bartering needs.
+                Build community, trade smarter and barter better with Barta!
+              </Typography>
 
-          <Typography
-            variant="body1"
-            sx={{
-              mb: { xs: 1, sm: 2.5 },
-              fontSize: { xs: '0.8rem', sm: '1rem' },
-              lineHeight: { xs: 1.35, sm: 1.5 },
-            }}
-          >
-            Plug in your postal code and country down below and check out our
-            {' '}
-            <Button
-              type="button"
-              variant="text"
-              onClick={() => setTermsOpen(true)}
+              <Box
+                component="img"
+                src={new URL('../../assets/BartaMascotNoBackground.png', import.meta.url).href}
+                alt="Barta"
+                sx={{
+                  display: 'block',
+                  width: '100%',
+                  maxWidth: { xs: 150, sm: 220 },
+                  height: 'auto',
+                  mx: 'auto',
+                  my: { xs: 0.5, sm: 2 },
+                  transform: 'scale(1.25)',
+                }}
+              />
+
+              <Typography
+                variant="body1"
+                sx={{
+                  mb: { xs: 1, sm: 2.5 },
+                  fontSize: { xs: '0.8rem', sm: '1rem' },
+                  lineHeight: { xs: 1.35, sm: 1.5 },
+                }}
+              >
+                Plug in your postal code and country down below and check out our
+                {' '}
+                <Button
+                  type="button"
+                  variant="text"
+                  onClick={() => setTermsOpen(true)}
+                  sx={{
+                    p: 0,
+                    minWidth: 0,
+                    fontSize: 'inherit',
+                    lineHeight: 'inherit',
+                    textTransform: 'none',
+                    verticalAlign: 'baseline',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  rules here
+                </Button>
+                . Use My Location will also automatically grab your location,
+                if you prefer that.
+              </Typography>
+            </>
+          )}
+
+          {actionPrompt && (
+            <Box
               sx={{
-                p: 0,
-                minWidth: 0,
-                fontSize: 'inherit',
-                lineHeight: 'inherit',
-                textTransform: 'none',
-                verticalAlign: 'baseline',
-                textDecoration: 'underline',
+                display: 'flex',
+                alignItems: 'center',
+                gap: { xs: 1.5, sm: 3 },
+                mb: { xs: 1, sm: 2.5 },
+                pr: 4,
               }}
             >
-              rules here
-            </Button>
-            . Use My Location will also automatically grab your location,
-            if you prefer that.
-          </Typography>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    mb: { xs: 1, sm: 2 },
+                    fontSize: { xs: '0.8rem', sm: '1rem' },
+                    lineHeight: { xs: 1.35, sm: 1.5 },
+                  }}
+                >
+                  We&apos;d love to have you post, comment, message and barter with us!
+                  Before getting started, please enter a postal code and country and
+                  confirm you&apos;ve read our terms and conditions
+                  {' '}
+                  <Button
+                    type="button"
+                    variant="text"
+                    onClick={() => setTermsOpen(true)}
+                    sx={{
+                      p: 0,
+                      minWidth: 0,
+                      fontSize: 'inherit',
+                      lineHeight: 'inherit',
+                      textTransform: 'none',
+                      verticalAlign: 'baseline',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    here
+                  </Button>
+                  .
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: { xs: '0.75rem', sm: '1rem' },
+                    lineHeight: { xs: 1.35, sm: 1.5 },
+                  }}
+                >
+                  Regarding inputing a postal code and country: this is required for a
+                  lot of site functionality- we use it to determine what posts to show
+                  users in location based queries within advanced search. If you have no
+                  intention of posting: DMs, comments and offers will work perfectly fine
+                  if you set it to any valid zipcode. You can always change your location
+                  at any time within your profile!
+                </Typography>
+              </Box>
+
+              <Box
+                component="img"
+                src={new URL('../../assets/BartaMascotNoBackground.png', import.meta.url).href}
+                alt="Barta"
+                sx={{
+                  display: 'block',
+                  width: { xs: 90, sm: 150 },
+                  height: 'auto',
+                  flexShrink: 0,
+                }}
+              />
+            </Box>
+          )}
 
           {error && (
             <Alert

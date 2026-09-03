@@ -23,7 +23,11 @@ import {
 } from '../../utils/utils';
 
 import { useParams, useRouter } from '../../context/RouterContext';
-import { useAuth } from '../../context/AuthContext';
+import {
+  hasCompletedLocationSetup,
+  requestLocationSetup,
+  useAuth,
+} from '../../context/AuthContext';
 import { useSocket } from '../../context/SocketContext';
 import { useToast } from '../../context/ToastContext';
 import UserAvatar from '../common/UserAvatar';
@@ -133,6 +137,12 @@ export default function Messages() {
   const handleSend = async () => {
     const text = draft.trim();
     if (!text || !activeDmId) return;
+
+    if (!hasCompletedLocationSetup(user)) {
+      requestLocationSetup();
+      return;
+    }
+
     setDraft('');
     await axios.post(`/dms/${activeDmId}/messages`, { text }, { withCredentials: true });
     loadInbox();

@@ -1,11 +1,6 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
 interface TermsProps {
@@ -35,16 +30,29 @@ export default function Terms({ embedded = false }: TermsProps) {
       </Typography>
 
       <Typography variant="h5" sx={{ mb: 1 }}>
-        Mission statement
+        Mission statement:
       </Typography>
 
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        Barta is a free peer-to-peer website where individuals post personal
+        property or services they want to barter. We:
+      </Typography>
+
+      <Box component="ul" sx={{ mt: 1, mb: 2 }}>
+        <li>charge no fees</li>
+        <li>process no payments</li>
+        <li>issue no credits or virtual currency</li>
+        <li>take no possession of property</li>
+        <li>assign no value to trades</li>
+      </Box>
+
       <Typography variant="body1" sx={{ mb: 4 }}>
-        Barta facilitates and encourages communities to trade goods and
-        services in ways that are beneficial for those involved, from both
-        sides of the trade. Barta opens access to a wider range of valuable
-        resources, and to more people than would otherwise be possible. We
-        encourage you to take the initiative in connecting and cultivating
-        real community in your neighborhood.
+        Our purpose as a platform is to provide tools that allow users to connect and
+        arrange trades on their own terms while encouraging user safety and responsibility.
+        {' '}
+        Barta opens access to a wider range of valuable resources, and to more people
+        than would otherwise be possible. We encourage you to take the initiative in
+        connecting and cultivating real community in your neighborhood.
       </Typography>
 
       <Typography variant="h5" sx={{ mb: 1 }}>
@@ -63,36 +71,48 @@ export default function Terms({ embedded = false }: TermsProps) {
       <Box component="ul" sx={{ mt: 1, mb: 2 }}>
         <li>
           {' '}
-          Anything illegal under local, state, federal, or international law.
-          Please be aware of what laws apply to you.
+          Illegal Content: Anything prohibited by applicable law.
+          This includes but is not limited to: stolen goods, counterfeit goods,
+          illegal drugs/controlled substances, prescription drugs, hazardous
+          materials, recalled or unsafe products, sexual services, anything
+          related to trafficking/exploitation, and content involving sexual
+          exploitation of minors. Barta may report suspected illegal activity
+          to law enforcement or other appropriate authorities when required by
+          law or when Barta determines that reporting is appropriate.
         </li>
         <li>
-          Art is allowed on Barta, but we do not allow explicit pornography.
-          We do offer a means to mark listings as NSFW if they are for
-          example: artistic rendentions of nude drawings, remakes of classical works,
-          or content that is fanmade and for more mature audiences.
+          Sexually Explicit Content: Art is allowed on Barta, but we do not allow
+          explicit pornography.
           Sexually explicit content of any kind should not be sent to other users
           in DMs, comments, or through posting- nor are sexual favors permitted
-          as an acceptable service for trade.
+          as an acceptable service for trade. We have a zero-tolerance policy for
+          sexual content involving minors, non-consensual intimate imagery, and
+          sexual exploitation/trafficking.
         </li>
         <li>
           {' '}
-          Targeted harrassment or abusive behavior aimed at either a specific
+          Harassment: Targeted harassment or abusive behavior aimed at either a specific
           individual or particular group of people.
           {' '}
         </li>
         <li>
-          Imagery or other depictions of excessive violence of any sort, or glorification
-          of that violence. While we welcome any contributions of say, hunters or
-          fishing lovers looking to barter their latest catches- but trading weapons
-          of any sort is strictly prohibitted.
+          Violence: Imagery or other depictions of excessive violence of any sort, or glorification
+          of that violence. While hunters and fishing enthusiasts may barter lawful
+          catches or related goods, weapons of any sort are strictly prohibited.
         </li>
         <li>
           {' '}
-          Use of Barta to solicit, cold call, or recruit users for other businesses, side projects,
-          hustles. This extends to trying to take advantage of users in any way, shape or form-
-          whether it be profitting of their free labor, an attempted scam, or a business/individual
-          trying to hire on our app.
+          Scams, Fraud, or Shady Business Tactics: Use of Barta to solicit, cold call, or recruit
+          users for other businesses, side projects, hustles. This extends to trying to take
+          advantage of users in any way, shape or form- whether it be profiting off their free
+          labor, an attempted scam, or a business/individual trying to hire on our app.
+        </li>
+        <li>
+          {' '}
+          Stolen or Unowned Content: Do not upload, offer, or trade content that either is a stolen
+          good or infringes another person&apos;s copyright, trademark, or other
+          intellectual-property rights. You must own the content or have
+          sufficient permission or legal rights to use and trade it.
         </li>
       </Box>
 
@@ -106,30 +126,80 @@ export default function Terms({ embedded = false }: TermsProps) {
       </Typography>
 
       <Typography variant="body1" sx={{ mb: 1 }}>
-        Protecting your privacy is your responsibility. Share only what
-        you&apos;re comfortable with — including in your profile — and give
-        your own information the same care Barta gives the community&apos;s.
+        Protecting your privacy is your responsibility. Help us help you by being aware
+        of the following.
+      </Typography>
+
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        Users should exercise caution when executing trades. We recommend:
       </Typography>
 
       <Box component="ul" sx={{ mt: 1, mb: 2 }}>
         <li>
-          Be mindful of what you share in public listings, comments, and forums
+          Sharing only information you are comfortable providing to other users.
         </li>
         <li>
-          Use discretion before sharing personal details like your email
-          address or phone number
-        </li>
-        <li>
-          Review Barta&apos;s privacy settings and adjust them to control who
-          can see your information
+          When a trade requires a meetup, meeting in a public area during the day, such as:
+          <Box component="ul" sx={{ mt: 1 }}>
+            <li>a local bookstore</li>
+            <li>a coffee shop</li>
+            <li>a farmer&apos;s market</li>
+            <li>an art market</li>
+            <li>or even by a police station</li>
+          </Box>
         </li>
       </Box>
 
-      <Typography variant="body1" sx={{ mb: 4 }}>
-        Taking responsibility for your own privacy lets you participate with
-        confidence. Barta takes security measures to protect the community,
-        but you play an active role in protecting yourself.
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        On your profile, you have the ability to:
       </Typography>
+
+      <Box component="ul" sx={{ mt: 1, mb: 2 }}>
+        <li>hide your own trade history, but not reviews</li>
+        <li>hide your personal email</li>
+        <li>edit your bio, profile picture, or profile background at any time</li>
+      </Box>
+
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        On your profile or on your feed, you can:
+      </Typography>
+
+      <Box component="ul" sx={{ mt: 1, mb: 2 }}>
+        <li>
+          edit or delete any post that is not tied to a completed trade. Completed
+          trades exist within trade history, which can be hidden
+        </li>
+      </Box>
+
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        On any post you comment on, you have:
+      </Typography>
+
+      <Box component="ul" sx={{ mt: 1, mb: 2 }}>
+        <li>the ability to delete your comment</li>
+      </Box>
+
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        Regarding your location:
+      </Typography>
+
+      <Box component="ul" sx={{ mt: 1, mb: 2 }}>
+        <li>
+          while we ask for a general location so you can place posts within a postal
+          code, we do not sell any of the data you provide, including location data.
+          We also do not share your location data with other users. You can change
+          your location to another valid postal code and country at any time
+        </li>
+      </Box>
+
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        We also offer:
+      </Typography>
+
+      <Box component="ul" sx={{ mt: 1, mb: 4 }}>
+        <li>a reporting system</li>
+        <li>the ability to block users, should you wish or require it</li>
+      </Box>
 
       <Typography variant="h5" sx={{ mb: 1 }}>
         3. Intentional Contributions
@@ -138,7 +208,7 @@ export default function Terms({ embedded = false }: TermsProps) {
       <Typography variant="body1" sx={{ mb: 1 }}>
         You&apos;ll get the most out of Barta by being intentional. Engage with
         neighbors and posts that interest you. Give back by answering
-        questions, sharing your experience, and showing up to events.
+        questions and sharing your experience.
       </Typography>
 
       <Box component="ul" sx={{ mt: 1, mb: 2 }}>
@@ -150,12 +220,17 @@ export default function Terms({ embedded = false }: TermsProps) {
         <li>
           Leave thoughtful comments on listings and topics that interest you
         </li>
-        <li>RSVP for and attend events that intrigue you</li>
       </Box>
 
       <Typography variant="body1" sx={{ mb: 4 }}>
-        Intentional involvement is how you learn from others, build real
-        connections, and help other members do the same.
+        Users are responsible for evaluating listings, determining the condition
+        and value of property or services, negotiating trade terms, and deciding
+        whether to complete an exchange. Barta does not inspect, authenticate, value,
+        or guarantee items or services offered by users. For digital-art trades,
+        Barta may facilitate the delivery of digital files upon completion of a trade.
+        Barta does not take ownership of those files, determine their value, or guarantee
+        their authenticity or legal ownership. Users are responsible for determining
+        and complying with any tax obligations arising from their trades.
       </Typography>
 
       <Typography variant="h5" sx={{ mb: 1 }}>
@@ -178,9 +253,11 @@ export default function Terms({ embedded = false }: TermsProps) {
         </li>
         <li>Disclose known defects or limitations up front</li>
         <li>
-          If an item incorporates someone else&apos;s copyrighted or
-          trademarked work, only list it if you have the right to trade it, and
-          credit the original creator where relevant
+          Do not upload, offer, or trade content that infringes another person&apos;s copyright,
+          trademark, or other intellectual-property rights. You must own the content or have
+          sufficient permission or legal rights to use and trade it. Additionally, when offering
+          digital content for trade, you represent that you own the content or have sufficient
+          rights to distribute and transfer it through Barta.
         </li>
       </Box>
 
@@ -266,7 +343,7 @@ export default function Terms({ embedded = false }: TermsProps) {
       </Typography>
 
       <Box component="ul" sx={{ mt: 1, mb: 2 }}>
-        <li>Select Report on the post or comment in question</li>
+        <li>Select Report on the post, comment or DM in question</li>
         <li>
           Describe the issue and include any relevant details or evidence, such
           as a link to the post, a screenshot, etc.
@@ -278,61 +355,9 @@ export default function Terms({ embedded = false }: TermsProps) {
       </Box>
 
       <Typography variant="body1" sx={{ mb: 4 }}>
-        Note: Barta reserves the right to remove content or suspend/ban accounts
-        that are detrimental to the community, including without prior warning
-        where a violation falls under Zero-Tolerance Violations below.
-      </Typography>
-
-      <Typography variant="h5" sx={{ mb: 1 }}>
-        8. Enforcement &amp; Consequences
-      </Typography>
-
-      <Typography variant="body1" sx={{ mb: 2 }}>
-        Barta uses a graduated enforcement system so members know what to
-        expect if a guideline is broken.
-      </Typography>
-
-      <Table size="small" sx={{ mb: 3 }}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Offense</TableCell>
-            <TableCell>Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>1st</TableCell>
-            <TableCell>Warning, and the content is removed from public view</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>2nd</TableCell>
-            <TableCell>Temporary suspension</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>3rd</TableCell>
-            <TableCell>Permanent ban</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-
-      <Typography variant="body1" sx={{ mb: 2 }}>
-        Violations are tracked on a rolling [window — e.g. 12 months] basis.
-        Content that violates this Code of Conduct is taken down from public
-        view as soon as a violation is confirmed, and is retained privately by
-        Barta&apos;s moderation team for [period — e.g. 30 days] in case of
-        appeal or dispute before deletion.
-      </Typography>
-
-      <Typography variant="h6" sx={{ mb: 1 }}>
-        Zero-tolerance — illegal content
-      </Typography>
-
-      <Typography variant="body1" sx={{ mb: 4 }}>
-        Illegal content (for example: stolen goods, prohibited weapons, or
-        other content illegal under applicable law) does not follow the
-        standard ladder above. It results in immediate permanent ban and
-        content removal on the first offense, and may be reported to law
-        enforcement where required.
+        8. Barta reserves the right to remove content, restrict access to platform
+        features, or take other appropriate action in response to violations of
+        this Code of Conduct.
       </Typography>
 
       <Typography variant="h5" sx={{ mb: 1 }}>

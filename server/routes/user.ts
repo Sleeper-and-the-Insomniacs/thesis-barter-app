@@ -203,7 +203,7 @@ router.patch('/me', requireAuth, async (req, res) => {
 router.patch('/me/location', requireAuth, async (req, res) => {
   try {
     const {
-      postalCode, country, lat, lng,
+      postalCode, country, lat, lng, termsAccepted,
     } = req.body ?? {};
 
     let location;
@@ -245,6 +245,7 @@ router.patch('/me/location', requireAuth, async (req, res) => {
         country: location.country,
         lat: location.lat,
         lng: location.lng,
+        termsAccepted: termsAccepted === true ? true : undefined,
       },
     });
 

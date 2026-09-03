@@ -412,7 +412,13 @@ artTradeOffers.patch('/:offerId/accept', requireAuth, async (req, res) => {
 
     const offer = await prisma.tradeOffer.findUnique({
       where: { id: offerId },
-      include: { post: true },
+      include: {
+        post: {
+          include: {
+            postMedia: { include: { media: true } },
+          },
+        },
+      },
     });
 
     if (!offer || offer.post.userId !== userId) {
@@ -423,23 +429,71 @@ artTradeOffers.patch('/:offerId/accept', requireAuth, async (req, res) => {
       return res.status(400).json({ error: 'Trade is already completed.' });
     }
 
-    await prisma.$transaction(async (tx) => {
-      const existingTrade = await tx.trade.findFirst({
-        where: {
-          postId: offer.postId,
-          ownerId: offer.post.userId,
-          requesterId: offer.offererId,
-        },
-      });
+    const isDigitalPost = offer.post.postMedia.some(
+      (item) => item.media?.variant === 'PREVIEW' || item.media?.variant === 'FULL',
+    );
 
-      if (existingTrade) {
-        await tx.trade.update({
-          where: { id: existingTrade.id },
-          data: {
-            ownerCompl: true,
-            reqCompl: true,
-            status: Status.COMPLETED,
+    await prisma.$transaction(async (tx) => {
+      if (isDigitalPost) {
+        const existingTrade = await tx.trade.findFirst({
+          where: {
+            postId: offer.postId,
+            ownerId: offer.post.userId,
+            requesterId: offer.offererId,
           },
+        });
+
+        if (existingTrade) {
+          await tx.trade.update({
+            where: { id: existingTrade.id },
+            data: {
+              ownerCompl: true,
+              reqCompl: true,
+              status: Status.COMPLETED,
+            },
+          });
+        } else {
+          await tx.trade.create({
+            data: {
+              postId: offer.postId,
+              ownerId: offer.post.userId,
+              requesterId: offer.offererId,
+              ownerCompl: true,
+              reqCompl: true,
+              status: Status.COMPLETED,
+            },
+          });
+        }
+
+        await tx.post.update({
+          where: { id: offer.postId },
+          data: { status: Status.COMPLETED },
+        });
+
+        await tx.tradeOffer.update({
+          where: { id: offerId },
+          data: {
+            status: 'COMPLETED',
+            ownerApproved: true,
+            offererApproved: true,
+          },
+        });
+
+        await tx.tradeOffer.deleteMany({
+          where: {
+            postId: offer.postId,
+            id: { not: offerId },
+          },
+        });
+
+        await enqueueJob(tx, 'SEND_NOTIFICATION', {
+          userId: offer.offererId,
+          type: 'TRADE_OFFER_ACCEPTED',
+          title: `Trade completed: "${offer.post.title}"`,
+          body: 'The post owner accepted your offer and marked the trade complete',
+          link: `/profile/history/${offer.postId}`,
+          entityType: 'TRADE_OFFER',
+          entityId: offerId,
         });
       } else {
         await tx.trade.create({
@@ -447,43 +501,46 @@ artTradeOffers.patch('/:offerId/accept', requireAuth, async (req, res) => {
             postId: offer.postId,
             ownerId: offer.post.userId,
             requesterId: offer.offererId,
-            ownerCompl: true,
-            reqCompl: true,
-            status: Status.COMPLETED,
           },
         });
+
+        await tx.post.update({
+          where: { id: offer.postId },
+          data: { status: Status.ACCEPTED },
+        });
+
+        await tx.tradeOffer.update({
+          where: { id: offerId },
+          data: {
+            status: 'ACCEPTED',
+            ownerApproved: true,
+          },
+        });
+
+        await tx.tradeOffer.deleteMany({
+          where: {
+            postId: offer.postId,
+            id: { not: offerId },
+          },
+        });
+
+        await tx.tradeRequest.deleteMany({
+          where: {
+            postId: offer.postId,
+            status: 'PENDING',
+          },
+        });
+
+        await enqueueJob(tx, 'SEND_NOTIFICATION', {
+          userId: offer.offererId,
+          type: 'TRADE_OFFER_ACCEPTED',
+          title: 'Your trade offer was accepted',
+          body: `Your trade offer for "${offer.post.title}" was accepted.`,
+          link: `/trade/${offer.postId}`,
+          entityType: 'TRADE_OFFER',
+          entityId: offerId,
+        });
       }
-
-      await tx.post.update({
-        where: { id: offer.postId },
-        data: { status: Status.COMPLETED },
-      });
-
-      await tx.tradeOffer.update({
-        where: { id: offerId },
-        data: {
-          status: 'COMPLETED',
-          ownerApproved: true,
-          offererApproved: true,
-        },
-      });
-
-      await tx.tradeOffer.deleteMany({
-        where: {
-          postId: offer.postId,
-          id: { not: offerId },
-        },
-      });
-
-      await enqueueJob(tx, 'SEND_NOTIFICATION', {
-        userId: offer.offererId,
-        type: 'TRADE_OFFER_ACCEPTED',
-        title: `Trade completed: "${offer.post.title}"`,
-        body: 'The post owner accepted your offer and marked the trade complete',
-        link: `/profile/history/${offer.postId}`,
-        entityType: 'TRADE_OFFER',
-        entityId: offerId,
-      });
     });
 
     return res.json({ success: true });

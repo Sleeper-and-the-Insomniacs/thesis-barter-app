@@ -8,13 +8,15 @@ export const MODERATOR_ROLES = ['MODERATOR', 'ADMIN'] as const;
 export type ModeratorRole = typeof MODERATOR_ROLES[number];
 export type UserRole = 'USER' | ModeratorRole | null;
 
+export const LOCATION_SETUP_REQUIRED_EVENT = 'barta:location-setup-required';
+
 // Safe for logged-out/loading users, returns false
 export function isModerator(role: UserRole): boolean {
   if (role === null) return false;
   return (MODERATOR_ROLES as readonly string[]).includes(role);
 }
 
-interface AuthUser {
+export interface AuthUser {
   id: number;
   name: string | null;
   email: string;
@@ -24,7 +26,21 @@ interface AuthUser {
   country: string | null;
   lat: number | null;
   lng: number | null;
+  termsAccepted: boolean;
 }
+
+export const hasCompletedLocationSetup = (user: AuthUser | null) => Boolean(
+  user
+  && user.termsAccepted
+  && user.zipCode
+  && user.country
+  && user.lat !== null
+  && user.lng !== null,
+);
+
+export const requestLocationSetup = () => {
+  window.dispatchEvent(new Event(LOCATION_SETUP_REQUIRED_EVENT));
+};
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -48,7 +64,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async function checkAuth() {
       try {
         const res = await axios.get('/oauth2/check', { withCredentials: true });
-        setUser(res.data.user);
+        let authUser = res.data.user;
+
+        if (authUser && typeof authUser.termsAccepted !== 'boolean') {
+          const userRes = await axios.get('/user/me', { withCredentials: true });
+          authUser = {
+            ...authUser,
+            termsAccepted: userRes.data.termsAccepted,
+          };
+        }
+
+        setUser(authUser);
         const blocksRes = await axios.get('/blocks', { withCredentials: true });
         setBlockedUserIds(blocksRes.data.map((b: { blockedId: number }) => b.blockedId));
       } catch {

@@ -2419,6 +2419,7 @@ export const UserScalarFieldEnum = {
   country: 'country',
   lat: 'lat',
   lng: 'lng',
+  termsAccepted: 'termsAccepted',
   isSystem: 'isSystem',
   pendingBio: 'pendingBio',
   isPendingScreening: 'isPendingScreening',

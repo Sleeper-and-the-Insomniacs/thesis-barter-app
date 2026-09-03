@@ -54,6 +54,7 @@ export type UserMinAggregateOutputType = {
   country: string | null
   lat: number | null
   lng: number | null
+  termsAccepted: boolean | null
   isSystem: boolean | null
   pendingBio: string | null
   isPendingScreening: boolean | null
@@ -76,6 +77,7 @@ export type UserMaxAggregateOutputType = {
   country: string | null
   lat: number | null
   lng: number | null
+  termsAccepted: boolean | null
   isSystem: boolean | null
   pendingBio: string | null
   isPendingScreening: boolean | null
@@ -98,6 +100,7 @@ export type UserCountAggregateOutputType = {
   country: number
   lat: number
   lng: number
+  termsAccepted: number
   isSystem: number
   pendingBio: number
   isPendingScreening: number
@@ -136,6 +139,7 @@ export type UserMinAggregateInputType = {
   country?: true
   lat?: true
   lng?: true
+  termsAccepted?: true
   isSystem?: true
   pendingBio?: true
   isPendingScreening?: true
@@ -158,6 +162,7 @@ export type UserMaxAggregateInputType = {
   country?: true
   lat?: true
   lng?: true
+  termsAccepted?: true
   isSystem?: true
   pendingBio?: true
   isPendingScreening?: true
@@ -180,6 +185,7 @@ export type UserCountAggregateInputType = {
   country?: true
   lat?: true
   lng?: true
+  termsAccepted?: true
   isSystem?: true
   pendingBio?: true
   isPendingScreening?: true
@@ -289,6 +295,7 @@ export type UserGroupByOutputType = {
   country: string | null
   lat: number | null
   lng: number | null
+  termsAccepted: boolean
   isSystem: boolean
   pendingBio: string | null
   isPendingScreening: boolean
@@ -334,6 +341,7 @@ export type UserWhereInput = {
   country?: Prisma.StringNullableFilter<"User"> | string | null
   lat?: Prisma.FloatNullableFilter<"User"> | number | null
   lng?: Prisma.FloatNullableFilter<"User"> | number | null
+  termsAccepted?: Prisma.BoolFilter<"User"> | boolean
   isSystem?: Prisma.BoolFilter<"User"> | boolean
   pendingBio?: Prisma.StringNullableFilter<"User"> | string | null
   isPendingScreening?: Prisma.BoolFilter<"User"> | boolean
@@ -381,6 +389,7 @@ export type UserOrderByWithRelationInput = {
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   lat?: Prisma.SortOrderInput | Prisma.SortOrder
   lng?: Prisma.SortOrderInput | Prisma.SortOrder
+  termsAccepted?: Prisma.SortOrder
   isSystem?: Prisma.SortOrder
   pendingBio?: Prisma.SortOrderInput | Prisma.SortOrder
   isPendingScreening?: Prisma.SortOrder
@@ -431,6 +440,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   country?: Prisma.StringNullableFilter<"User"> | string | null
   lat?: Prisma.FloatNullableFilter<"User"> | number | null
   lng?: Prisma.FloatNullableFilter<"User"> | number | null
+  termsAccepted?: Prisma.BoolFilter<"User"> | boolean
   isSystem?: Prisma.BoolFilter<"User"> | boolean
   pendingBio?: Prisma.StringNullableFilter<"User"> | string | null
   isPendingScreening?: Prisma.BoolFilter<"User"> | boolean
@@ -478,6 +488,7 @@ export type UserOrderByWithAggregationInput = {
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   lat?: Prisma.SortOrderInput | Prisma.SortOrder
   lng?: Prisma.SortOrderInput | Prisma.SortOrder
+  termsAccepted?: Prisma.SortOrder
   isSystem?: Prisma.SortOrder
   pendingBio?: Prisma.SortOrderInput | Prisma.SortOrder
   isPendingScreening?: Prisma.SortOrder
@@ -508,6 +519,7 @@ export type UserScalarWhereWithAggregatesInput = {
   country?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   lat?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   lng?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
+  termsAccepted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isSystem?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   pendingBio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isPendingScreening?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -529,6 +541,7 @@ export type UserCreateInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -576,6 +589,7 @@ export type UserUncheckedCreateInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -622,6 +636,7 @@ export type UserUpdateInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -669,6 +684,7 @@ export type UserUncheckedUpdateInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -716,6 +732,7 @@ export type UserCreateManyInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -737,6 +754,7 @@ export type UserUpdateManyMutationInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -759,6 +777,7 @@ export type UserUncheckedUpdateManyInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -781,6 +800,7 @@ export type UserCountOrderByAggregateInput = {
   country?: Prisma.SortOrder
   lat?: Prisma.SortOrder
   lng?: Prisma.SortOrder
+  termsAccepted?: Prisma.SortOrder
   isSystem?: Prisma.SortOrder
   pendingBio?: Prisma.SortOrder
   isPendingScreening?: Prisma.SortOrder
@@ -810,6 +830,7 @@ export type UserMaxOrderByAggregateInput = {
   country?: Prisma.SortOrder
   lat?: Prisma.SortOrder
   lng?: Prisma.SortOrder
+  termsAccepted?: Prisma.SortOrder
   isSystem?: Prisma.SortOrder
   pendingBio?: Prisma.SortOrder
   isPendingScreening?: Prisma.SortOrder
@@ -832,6 +853,7 @@ export type UserMinOrderByAggregateInput = {
   country?: Prisma.SortOrder
   lat?: Prisma.SortOrder
   lng?: Prisma.SortOrder
+  termsAccepted?: Prisma.SortOrder
   isSystem?: Prisma.SortOrder
   pendingBio?: Prisma.SortOrder
   isPendingScreening?: Prisma.SortOrder
@@ -1262,6 +1284,7 @@ export type UserCreateWithoutInitiatedDMsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -1308,6 +1331,7 @@ export type UserUncheckedCreateWithoutInitiatedDMsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -1358,6 +1382,7 @@ export type UserCreateWithoutRecievedDMsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -1404,6 +1429,7 @@ export type UserUncheckedCreateWithoutRecievedDMsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -1465,6 +1491,7 @@ export type UserUpdateWithoutInitiatedDMsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1511,6 +1538,7 @@ export type UserUncheckedUpdateWithoutInitiatedDMsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1567,6 +1595,7 @@ export type UserUpdateWithoutRecievedDMsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1613,6 +1642,7 @@ export type UserUncheckedUpdateWithoutRecievedDMsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1658,6 +1688,7 @@ export type UserCreateWithoutSMessagesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -1704,6 +1735,7 @@ export type UserUncheckedCreateWithoutSMessagesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -1754,6 +1786,7 @@ export type UserCreateWithoutRMessagesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -1800,6 +1833,7 @@ export type UserUncheckedCreateWithoutRMessagesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -1861,6 +1895,7 @@ export type UserUpdateWithoutSMessagesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1907,6 +1942,7 @@ export type UserUncheckedUpdateWithoutSMessagesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1963,6 +1999,7 @@ export type UserUpdateWithoutRMessagesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2009,6 +2046,7 @@ export type UserUncheckedUpdateWithoutRMessagesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2054,6 +2092,7 @@ export type UserCreateWithoutLogsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2100,6 +2139,7 @@ export type UserUncheckedCreateWithoutLogsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2161,6 +2201,7 @@ export type UserUpdateWithoutLogsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2207,6 +2248,7 @@ export type UserUncheckedUpdateWithoutLogsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2252,6 +2294,7 @@ export type UserCreateWithoutPostsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2298,6 +2341,7 @@ export type UserUncheckedCreateWithoutPostsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2359,6 +2403,7 @@ export type UserUpdateWithoutPostsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2405,6 +2450,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2450,6 +2496,7 @@ export type UserCreateWithoutOwnedTradesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2496,6 +2543,7 @@ export type UserUncheckedCreateWithoutOwnedTradesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2546,6 +2594,7 @@ export type UserCreateWithoutReqTradesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2592,6 +2641,7 @@ export type UserUncheckedCreateWithoutReqTradesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2653,6 +2703,7 @@ export type UserUpdateWithoutOwnedTradesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2699,6 +2750,7 @@ export type UserUncheckedUpdateWithoutOwnedTradesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2755,6 +2807,7 @@ export type UserUpdateWithoutReqTradesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2801,6 +2854,7 @@ export type UserUncheckedUpdateWithoutReqTradesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2846,6 +2900,7 @@ export type UserCreateWithoutTradeOffersInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2892,6 +2947,7 @@ export type UserUncheckedCreateWithoutTradeOffersInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -2953,6 +3009,7 @@ export type UserUpdateWithoutTradeOffersInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2999,6 +3056,7 @@ export type UserUncheckedUpdateWithoutTradeOffersInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3044,6 +3102,7 @@ export type UserCreateWithoutTradeRequestsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3090,6 +3149,7 @@ export type UserUncheckedCreateWithoutTradeRequestsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3151,6 +3211,7 @@ export type UserUpdateWithoutTradeRequestsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3197,6 +3258,7 @@ export type UserUncheckedUpdateWithoutTradeRequestsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3242,6 +3304,7 @@ export type UserCreateWithoutCommentsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3288,6 +3351,7 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3349,6 +3413,7 @@ export type UserUpdateWithoutCommentsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3395,6 +3460,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3440,6 +3506,7 @@ export type UserCreateWithoutProductsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3486,6 +3553,7 @@ export type UserUncheckedCreateWithoutProductsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3547,6 +3615,7 @@ export type UserUpdateWithoutProductsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3593,6 +3662,7 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3638,6 +3708,7 @@ export type UserCreateWithoutServicesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3684,6 +3755,7 @@ export type UserUncheckedCreateWithoutServicesInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3745,6 +3817,7 @@ export type UserUpdateWithoutServicesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3791,6 +3864,7 @@ export type UserUncheckedUpdateWithoutServicesInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3836,6 +3910,7 @@ export type UserCreateWithoutSReviewsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3882,6 +3957,7 @@ export type UserUncheckedCreateWithoutSReviewsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3932,6 +4008,7 @@ export type UserCreateWithoutRReviewsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -3978,6 +4055,7 @@ export type UserUncheckedCreateWithoutRReviewsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4039,6 +4117,7 @@ export type UserUpdateWithoutSReviewsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4085,6 +4164,7 @@ export type UserUncheckedUpdateWithoutSReviewsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4141,6 +4221,7 @@ export type UserUpdateWithoutRReviewsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4187,6 +4268,7 @@ export type UserUncheckedUpdateWithoutRReviewsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4232,6 +4314,7 @@ export type UserCreateWithoutBlocksInitiatedInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4278,6 +4361,7 @@ export type UserUncheckedCreateWithoutBlocksInitiatedInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4328,6 +4412,7 @@ export type UserCreateWithoutBlocksReceivedInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4374,6 +4459,7 @@ export type UserUncheckedCreateWithoutBlocksReceivedInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4435,6 +4521,7 @@ export type UserUpdateWithoutBlocksInitiatedInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4481,6 +4568,7 @@ export type UserUncheckedUpdateWithoutBlocksInitiatedInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4537,6 +4625,7 @@ export type UserUpdateWithoutBlocksReceivedInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4583,6 +4672,7 @@ export type UserUncheckedUpdateWithoutBlocksReceivedInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4628,6 +4718,7 @@ export type UserCreateWithoutReportsFiledInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4674,6 +4765,7 @@ export type UserUncheckedCreateWithoutReportsFiledInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4724,6 +4816,7 @@ export type UserCreateWithoutReportsAgainstInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4770,6 +4863,7 @@ export type UserUncheckedCreateWithoutReportsAgainstInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4820,6 +4914,7 @@ export type UserCreateWithoutReportsResolvedInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4866,6 +4961,7 @@ export type UserUncheckedCreateWithoutReportsResolvedInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -4927,6 +5023,7 @@ export type UserUpdateWithoutReportsFiledInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4973,6 +5070,7 @@ export type UserUncheckedUpdateWithoutReportsFiledInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5029,6 +5127,7 @@ export type UserUpdateWithoutReportsAgainstInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5075,6 +5174,7 @@ export type UserUncheckedUpdateWithoutReportsAgainstInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5131,6 +5231,7 @@ export type UserUpdateWithoutReportsResolvedInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5177,6 +5278,7 @@ export type UserUncheckedUpdateWithoutReportsResolvedInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5222,6 +5324,7 @@ export type UserCreateWithoutAppealsFiledInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -5268,6 +5371,7 @@ export type UserUncheckedCreateWithoutAppealsFiledInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -5318,6 +5422,7 @@ export type UserCreateWithoutAppealsResolvedInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -5364,6 +5469,7 @@ export type UserUncheckedCreateWithoutAppealsResolvedInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -5425,6 +5531,7 @@ export type UserUpdateWithoutAppealsFiledInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5471,6 +5578,7 @@ export type UserUncheckedUpdateWithoutAppealsFiledInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5527,6 +5635,7 @@ export type UserUpdateWithoutAppealsResolvedInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5573,6 +5682,7 @@ export type UserUncheckedUpdateWithoutAppealsResolvedInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5618,6 +5728,7 @@ export type UserCreateWithoutMediaInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -5664,6 +5775,7 @@ export type UserUncheckedCreateWithoutMediaInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -5725,6 +5837,7 @@ export type UserUpdateWithoutMediaInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5771,6 +5884,7 @@ export type UserUncheckedUpdateWithoutMediaInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5816,6 +5930,7 @@ export type UserCreateWithoutUserMediaInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -5862,6 +5977,7 @@ export type UserUncheckedCreateWithoutUserMediaInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -5923,6 +6039,7 @@ export type UserUpdateWithoutUserMediaInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5969,6 +6086,7 @@ export type UserUncheckedUpdateWithoutUserMediaInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6014,6 +6132,7 @@ export type UserCreateWithoutNotificationsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -6060,6 +6179,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   country?: string | null
   lat?: number | null
   lng?: number | null
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: string | null
   isPendingScreening?: boolean
@@ -6121,6 +6241,7 @@ export type UserUpdateWithoutNotificationsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6167,6 +6288,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   lng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  termsAccepted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSystem?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pendingBio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPendingScreening?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6460,6 +6582,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   country?: boolean
   lat?: boolean
   lng?: boolean
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: boolean
   isPendingScreening?: boolean
@@ -6508,6 +6631,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   country?: boolean
   lat?: boolean
   lng?: boolean
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: boolean
   isPendingScreening?: boolean
@@ -6530,6 +6654,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   country?: boolean
   lat?: boolean
   lng?: boolean
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: boolean
   isPendingScreening?: boolean
@@ -6552,6 +6677,7 @@ export type UserSelectScalar = {
   country?: boolean
   lat?: boolean
   lng?: boolean
+  termsAccepted?: boolean
   isSystem?: boolean
   pendingBio?: boolean
   isPendingScreening?: boolean
@@ -6560,7 +6686,7 @@ export type UserSelectScalar = {
   tradeHistoryVisible?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "googleId" | "name" | "email" | "phone" | "role" | "bio" | "createdAt" | "lastActive" | "zipCode" | "country" | "lat" | "lng" | "isSystem" | "pendingBio" | "isPendingScreening" | "version" | "emailVisible" | "tradeHistoryVisible", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "googleId" | "name" | "email" | "phone" | "role" | "bio" | "createdAt" | "lastActive" | "zipCode" | "country" | "lat" | "lng" | "termsAccepted" | "isSystem" | "pendingBio" | "isPendingScreening" | "version" | "emailVisible" | "tradeHistoryVisible", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   reqTrades?: boolean | Prisma.User$reqTradesArgs<ExtArgs>
@@ -6635,6 +6761,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     country: string | null
     lat: number | null
     lng: number | null
+    termsAccepted: boolean
     isSystem: boolean
     pendingBio: string | null
     isPendingScreening: boolean
@@ -7102,6 +7229,7 @@ export interface UserFieldRefs {
   readonly country: Prisma.FieldRef<"User", 'String'>
   readonly lat: Prisma.FieldRef<"User", 'Float'>
   readonly lng: Prisma.FieldRef<"User", 'Float'>
+  readonly termsAccepted: Prisma.FieldRef<"User", 'Boolean'>
   readonly isSystem: Prisma.FieldRef<"User", 'Boolean'>
   readonly pendingBio: Prisma.FieldRef<"User", 'String'>
   readonly isPendingScreening: Prisma.FieldRef<"User", 'Boolean'>
